@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, Switch, Text, View } from "react-native";
 import "../global.css";
 import CustomButton from './components/custom-button';
 import Table from './components/table';
-import { CounterProvider } from './context/counter-context';
+import { useCounter } from './context/counter-context';
 import { Build, QuestData, QuestParts, Variant } from './types/types';
 import { fetchQuestPart } from './utils/questPart';
 import { fetchQuestPartsList } from './utils/questPartsList';
@@ -15,6 +15,14 @@ export default function Index() {
   const [questPartIndex, setQuestPartIndex] = useState(0);
 
   const [loading, setLoading] = useState(true);
+
+  const { completed, toggleCompleted } = useCounter();
+  const currentPart = data?.parts[questPartIndex];
+  const isCompleted = completed?.[currentPart?.toString() ?? ''] || false;
+  
+  const toggleSwitch = () => {
+    if (currentPart) toggleCompleted(currentPart.toString());
+  };
 
   useEffect(() => {
     const fetchPartsList = async () => {
@@ -62,50 +70,60 @@ export default function Index() {
   };
 
   return (
-    <CounterProvider>
-      <ScrollView className='bg-[#1c1c1c]'>
-        <View className='flex justify-center'>
-          <View className='flex flex-row justify-between px-4 py-8'>
-            <CustomButton
-              title="Back"
-              backgroundColor="bg-emerald-800"
-              onPress={handlePrev}
-              disabled={questPartIndex === 0}
-            />
-            <CustomButton
-              title="Next"
-              backgroundColor="bg-emerald-800"
-              onPress={handleNext}
-              disabled={questPartIndex === (data?.parts.length ?? 1) - 1}
-            />
-          </View>
-
-          {data && data.parts && (
-            <Text className='text-3xl text-white font-bold flex justify-center mb-6 px-4'>
-              Part {data.parts[questPartIndex]}
-            </Text>
-          )}
-
-          {partData && partData.builds.map((build: Build, partDataIndex: number) =>
-            <View key={partDataIndex} className='px-4'>
-              <Text className='text-xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</Text>
-              <View className='flex'>
-                {build.variants.map((variant: Variant, variantIndex: number) => (
-                  <View className='mt-16 mb-8'>
-                    <Text className='text-xl text-white font-semibold'>VARIANT {variantIndex + 1}</Text>
-                    <View key={variantIndex}>
-                      <Table
-                        tableData={variant.parts.flatMap((part) => part.items)}
-                      />
-                    </View>
-                  </View>
-                ))}
-              </View>
-            </View>
-          )}
-
+    <ScrollView className='bg-[#1c1c1c]'>
+      <View className='flex justify-center'>
+        <View className='flex flex-row justify-between px-4 py-8'>
+          <CustomButton
+            title="Back"
+            backgroundColor="bg-emerald-800"
+            onPress={handlePrev}
+            disabled={questPartIndex === 0}
+          />
+          <CustomButton
+            title="Next"
+            backgroundColor="bg-emerald-800"
+            onPress={handleNext}
+            disabled={questPartIndex === (data?.parts.length ?? 1) - 1}
+          />
         </View>
-      </ScrollView>
-    </CounterProvider>
+
+        <View className='flex flex-row items-center px-4 py-8'>
+          <Switch
+            trackColor={{false: '#767577', true: '#b5b5b5'}}
+            thumbColor={isCompleted ? '#065f46' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isCompleted}
+          />
+          <Text className='text-white text-xs ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</Text>
+        </View>
+
+        {data && data.parts && (
+          <Text className='text-3xl text-white font-bold flex justify-center mb-6 px-4'>
+            Part {data.parts[questPartIndex]}
+          </Text>
+        )}
+
+        {partData && partData.builds.map((build: Build, partDataIndex: number) =>
+          <View key={partDataIndex} className='px-4'>
+            <Text className='text-xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</Text>
+            <Text className={`text-xs text-emerald-500 flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</Text>
+            <View className='flex'>
+              {build.variants.map((variant: Variant, variantIndex: number) => (
+                <View className='mt-16 mb-8'>
+                  <Text className='text-xl text-white font-semibold'>VARIANT {variantIndex + 1}</Text>
+                  <View key={variantIndex}>
+                    <Table
+                      tableData={variant.parts.flatMap((part) => part.items)}
+                    />
+                  </View>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+      </View>
+    </ScrollView>
   );
 }
