@@ -2,7 +2,7 @@ import { SairaExtraCondensed_400Regular } from '@expo-google-fonts/saira-extra-c
 import { Tomorrow_400Regular } from '@expo-google-fonts/tomorrow';
 import { useFonts } from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, Switch, View } from "react-native";
+import { ActivityIndicator, ImageBackground, ScrollView, Switch, View } from "react-native";
 import "../global.css";
 import CustomButton from './components/custom-button';
 import CustomText from './components/custom-text';
@@ -82,6 +82,14 @@ export default function Index() {
   return (
     <ScrollView className='bg-[#1c1c1c]'>
       <View className='flex justify-center'>
+        <ImageBackground 
+          source={require("../assets/images/shadow-orange.png")} 
+          resizeMode="cover" 
+          className='absolute top-0'
+          style={{
+            width: '100%',
+          }}
+        ></ImageBackground>
         <View className='flex flex-row justify-between px-4 py-8'>
           <CustomButton
             title="Back"
