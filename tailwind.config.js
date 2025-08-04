@@ -4,7 +4,12 @@ module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}"], // File-based routing in app/
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        tomorrow: ['Tomorrow'],
+        saira: ['Saira']
+      },
+    },
   },
   plugins: [],
 }

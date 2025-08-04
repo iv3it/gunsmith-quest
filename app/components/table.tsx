@@ -1,7 +1,9 @@
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useCounter } from '../context/counter-context';
 import { TraderWithoutTask, WeaponWithoutTask } from '../types/types';
+import CustomText from './custom-text';
+import CustomTitleText from './custom-title-text';
 
 interface TableProps {
   tableData: WeaponWithoutTask[];
@@ -29,20 +31,20 @@ const Table = ({tableData} : TableProps) => {
                 /> */}
                 
                 <View className='flex flex-col'>
-                  <Text className='text-white text-sm font-semibold'>{item.name}</Text>
+                  <CustomTitleText className='text-white text-sm font-semibold'>{item.name}</CustomTitleText>
 
-                  <Text className='text-white text-xs italic'>{item.traders.map((trader: TraderWithoutTask) => trader.trader.name).join(', ')}</Text>
+                  <CustomText className='text-white text-xs italic'>{item.traders.map((trader: TraderWithoutTask) => trader.trader.name).join(', ')}</CustomText>
                 </View>
               </View>
 
               {/* Amount Cell */}
               <View className='flex-1 flex-row justify-end items-center p-4 pr-0'>
                 <TouchableOpacity onPress={() => decrease(item.slug)} className='bg-red-700 p-2 rounded-full w-8 h-8 flex justify-center items-center'>
-                  <Text className='text-white text-lg'>-</Text>
+                  <CustomText className='text-white text-lg'>-</CustomText>
                 </TouchableOpacity>
-                <Text className='mx-4 text-white text-lg font-semibold'>{amount}</Text>
+                <CustomText className='mx-4 text-white text-lg font-semibold'>{amount}</CustomText>
                 <TouchableOpacity onPress={() => increase(item.slug)} className='bg-emerald-800 p-2 rounded-full w-8 h-8 flex justify-center items-center'>
-                  <Text className='text-white text-lg'>+</Text>
+                  <CustomText className='text-white text-lg'>+</CustomText>
                 </TouchableOpacity>
               </View>
 

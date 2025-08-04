@@ -1,7 +1,12 @@
+import { SairaExtraCondensed_400Regular } from '@expo-google-fonts/saira-extra-condensed';
+import { Tomorrow_400Regular } from '@expo-google-fonts/tomorrow';
+import { useFonts } from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, Switch, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, Switch, View } from "react-native";
 import "../global.css";
 import CustomButton from './components/custom-button';
+import CustomText from './components/custom-text';
+import CustomTitleText from './components/custom-title-text';
 import Table from './components/table';
 import { useCounter } from './context/counter-context';
 import { Build, QuestData, QuestParts, Variant } from './types/types';
@@ -9,6 +14,11 @@ import { fetchQuestPart } from './utils/questPart';
 import { fetchQuestPartsList } from './utils/questPartsList';
 
 export default function Index() {
+  const [loaded] = useFonts({
+    Tomorrow: Tomorrow_400Regular,
+    Saira: SairaExtraCondensed_400Regular,
+  });
+
   const [data, setData] = useState<QuestParts | undefined>(undefined);
   const [partData, setPartData] = useState<QuestData | undefined>(undefined);
 
@@ -58,7 +68,7 @@ export default function Index() {
     fetchPart();
   }, [questPartIndex, data]);
 
-  if (loading) return <ActivityIndicator />;
+  if (!loaded || loading) return <ActivityIndicator />;
 
   const handlePrev = () => {
     setQuestPartIndex((prev) => Math.max(0, prev - 1));
@@ -95,23 +105,23 @@ export default function Index() {
             onValueChange={toggleSwitch}
             value={isCompleted}
           />
-          <Text className='text-white text-xs ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</Text>
+          <CustomText className='text-white text-xs ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
         </View>
 
         {data && data.parts && (
-          <Text className='text-3xl text-white font-bold flex justify-center mb-6 px-4'>
+          <CustomTitleText className='text-3xl text-white font-bold flex justify-center mb-6 px-4'>
             Part {data.parts[questPartIndex]}
-          </Text>
+          </CustomTitleText>
         )}
 
         {partData && partData.builds.map((build: Build, partDataIndex: number) =>
           <View key={partDataIndex} className='px-4'>
-            <Text className='text-xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</Text>
-            <Text className={`text-xs text-emerald-500 flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</Text>
+            <CustomText className='text-xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</CustomText>
+            <CustomText className={`text-xs text-emerald-500 flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
             <View className='flex'>
               {build.variants.map((variant: Variant, variantIndex: number) => (
                 <View className='mt-16 mb-8'>
-                  <Text className='text-xl text-white font-semibold'>VARIANT {variantIndex + 1}</Text>
+                  <CustomText className='text-xl text-white font-semibold'>VARIANT {variantIndex + 1}</CustomText>
                   <View key={variantIndex}>
                     <Table
                       tableData={variant.parts.flatMap((part) => part.items)}
