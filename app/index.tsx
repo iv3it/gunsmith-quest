@@ -82,24 +82,14 @@ export default function Index() {
   return (
     <ScrollView className='bg-[#1c1c1c]'>
       <View className='flex justify-center'>
-        <ImageBackground 
-          source={require("../assets/images/shadow-orange.png")} 
-          resizeMode="cover" 
-          className='absolute top-0'
-          style={{
-            width: '100%',
-          }}
-        ></ImageBackground>
         <View className='flex flex-row justify-between px-4 py-8'>
           <CustomButton
             title="Back"
-            backgroundColor="bg-emerald-800"
             onPress={handlePrev}
             disabled={questPartIndex === 0}
           />
           <CustomButton
             title="Next"
-            backgroundColor="bg-emerald-800"
             onPress={handleNext}
             disabled={questPartIndex === (data?.parts.length ?? 1) - 1}
           />
@@ -128,9 +118,9 @@ export default function Index() {
             <CustomText className={`text-xs text-emerald-500 flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
             <View className='flex'>
               {build.variants.map((variant: Variant, variantIndex: number) => (
-                <View className='mt-16 mb-8'>
+                <View className='mt-16 mb-8' key={variantIndex}>
                   <CustomText className='text-xl text-white font-semibold'>VARIANT {variantIndex + 1}</CustomText>
-                  <View key={variantIndex}>
+                  <View>
                     <Table
                       tableData={variant.parts.flatMap((part) => part.items)}
                     />
@@ -142,6 +132,14 @@ export default function Index() {
         )}
 
       </View>
+      <ImageBackground 
+          source={require("../assets/images/shadow-orange.png")} 
+          resizeMode="cover" 
+          className='absolute bottom-0'
+          style={{
+            width: '100%',
+          }}
+        ></ImageBackground>
     </ScrollView>
   );
 }
