@@ -2,7 +2,8 @@ import { SairaExtraCondensed_400Regular } from '@expo-google-fonts/saira-extra-c
 import { Tomorrow_400Regular } from '@expo-google-fonts/tomorrow';
 import { useFonts } from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ImageBackground, ScrollView, Switch, View } from "react-native";
+import { ActivityIndicator, Dimensions, ImageBackground, ScrollView, Switch, View } from "react-native";
+import Svg, { Defs, Path, Pattern, Rect } from 'react-native-svg';
 import "../global.css";
 import CustomButton from './components/custom-button';
 import CustomText from './components/custom-text';
@@ -12,6 +13,8 @@ import { useCounter } from './context/counter-context';
 import { Build, QuestData, QuestParts, Variant } from './types/types';
 import { fetchQuestPart } from './utils/questPart';
 import { fetchQuestPartsList } from './utils/questPartsList';
+
+const { width, height } = Dimensions.get('window');
 
 export default function Index() {
   const [loaded] = useFonts({
@@ -98,24 +101,24 @@ export default function Index() {
         <View className='flex flex-row items-center px-4 py-8'>
           <Switch
             trackColor={{false: '#767577', true: '#b5b5b5'}}
-            thumbColor={isCompleted ? '#065f46' : '#f4f3f4'}
+            thumbColor={isCompleted ? '#f96900' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
             value={isCompleted}
           />
-          <CustomText className='text-white text-xs ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
+          <CustomText className='text-white text-xl ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
         </View>
 
         {data && data.parts && (
-          <CustomTitleText className='text-3xl text-white font-bold flex justify-center mb-6 px-4'>
+          <CustomTitleText className='text-4xl text-white font-bold flex justify-center mb-6 px-4'>
             Part {data.parts[questPartIndex]}
           </CustomTitleText>
         )}
 
         {partData && partData.builds.map((build: Build, partDataIndex: number) =>
           <View key={partDataIndex} className='px-4'>
-            <CustomText className='text-xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</CustomText>
-            <CustomText className={`text-xs text-emerald-500 flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
+            <CustomText className='text-2xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</CustomText>
+            <CustomText className={`text-2xl text-darkOrange flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
             <View className='flex'>
               {build.variants.map((variant: Variant, variantIndex: number) => (
                 <View className='mt-16 mb-8' key={variantIndex}>
@@ -132,6 +135,22 @@ export default function Index() {
         )}
 
       </View>
+
+      <Svg width={width} height={height} style={{ position: 'absolute', zIndex: -1, opacity: 0.01 }}>
+        <Defs>
+          <Pattern
+            id="stripes"
+            patternUnits="userSpaceOnUse"
+            width="20"
+            height="20"
+            patternTransform="rotate(45)"
+          >
+            <Path d="M0 0 L20 0 L20 10 L0 10 Z" fill="#FFC0CB" />
+          </Pattern>
+        </Defs>
+        <Rect width="100%" height="100%" fill="url(#stripes)" />
+      </Svg>
+
       <ImageBackground 
           source={require("../assets/images/shadow-orange.png")} 
           resizeMode="cover" 
