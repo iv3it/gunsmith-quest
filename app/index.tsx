@@ -2,7 +2,7 @@ import { SairaExtraCondensed_400Regular } from '@expo-google-fonts/saira-extra-c
 import { Tomorrow_400Regular } from '@expo-google-fonts/tomorrow';
 import { useFonts } from 'expo-font';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, ImageBackground, ScrollView, Switch, View } from "react-native";
+import { ActivityIndicator, Dimensions, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Switch, View } from "react-native";
 import Svg, { Defs, Path, Pattern, Rect } from 'react-native-svg';
 import "../global.css";
 import CustomButton from './components/custom-button';
@@ -99,14 +99,40 @@ export default function Index() {
         </View>
 
         <View className='flex flex-row items-center px-4 py-8'>
-          <Switch
-            trackColor={{false: '#767577', true: '#b5b5b5'}}
-            thumbColor={isCompleted ? '#f96900' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isCompleted}
-          />
-          <CustomText className='text-white text-xl ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
+          {Platform.OS === 'web' ? (
+            <>
+              <Pressable
+                onPress={toggleSwitch}
+                style={[
+                  styles.webSwitch,
+                  { backgroundColor: isCompleted ? '#f8f8f8' : '#767577' },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.thumb,
+                    {
+                      left: isCompleted ? 24 : 2,
+                      backgroundColor: isCompleted ? '#f96900' : '#f4f3f4',
+                    },
+                  ]}
+                />
+              </Pressable>
+              <CustomText className='text-white text-xl ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
+            </>
+          ) : (
+
+            <>
+              <Switch
+                value={isCompleted}
+                onValueChange={toggleSwitch}
+                trackColor={{ false: '#767577', true: '#f8f8f8' }}
+                thumbColor={isCompleted ? '#f96900' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+              />
+              <CustomText className='text-white text-xl ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
+            </>
+          )}
         </View>
 
         {data && data.parts && (
@@ -162,3 +188,21 @@ export default function Index() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  webSwitch: {
+    width: 50,
+    height: 30,
+    borderRadius: 30,
+    position: 'relative',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
+  thumb: {
+    position: 'absolute',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    top: 3,
+  },
+});
