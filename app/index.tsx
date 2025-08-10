@@ -10,8 +10,7 @@ import CustomText from './components/custom-text';
 import CustomTitleText from './components/custom-title-text';
 import Table from './components/table';
 import { useCounter } from './context/counter-context';
-import { Build, QuestData, QuestParts, Variant } from './types/types';
-import { fetchQuestPart } from './utils/questPart';
+import { QuestParts } from './types/types';
 import { fetchQuestPartsList } from './utils/questPartsList';
 
 const { width, height } = Dimensions.get('window');
@@ -23,7 +22,6 @@ export default function Index() {
   });
 
   const [data, setData] = useState<QuestParts | undefined>(undefined);
-  const [partData, setPartData] = useState<QuestData | undefined>(undefined);
 
   const [questPartIndex, setQuestPartIndex] = useState(0);
 
@@ -52,24 +50,6 @@ export default function Index() {
 
     fetchPartsList();
   }, []);
-
-  useEffect(() => {
-    if (questPartIndex < 0 || !data) return;
-
-    const fetchPart = async () => {
-      setLoading(true);
-      try {
-        const response = await fetchQuestPart(data.parts[questPartIndex]);
-        setPartData(response);
-      } catch (error) {
-        console.error('Axios error:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPart();
-  }, [questPartIndex, data]);
 
   if (!loaded || loading) return <ActivityIndicator />;
 
@@ -140,28 +120,13 @@ export default function Index() {
         </View>
 
         {data && data.parts && (
-          <CustomTitleText className='text-4xl text-white font-bold flex justify-center mb-6 px-4'>
-            Part {data.parts[questPartIndex]}
-          </CustomTitleText>
-        )}
+          <>
+            <CustomTitleText className='text-4xl text-white font-bold flex justify-center mb-6 px-4'>
+              Part {data.parts[questPartIndex]}
+            </CustomTitleText>
 
-        {partData && partData.builds.map((build: Build, partDataIndex: number) =>
-          <View key={partDataIndex} className='px-4'>
-            <CustomText className='text-2xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</CustomText>
-            <CustomText className={`text-2xl text-darkOrange flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
-            <View className='flex'>
-              {build.variants.map((variant: Variant, variantIndex: number) => (
-                <View className='mt-16 mb-8' key={variantIndex}>
-                  <CustomText className='text-xl text-white font-semibold'>VARIANT {variantIndex + 1}</CustomText>
-                  <View>
-                    <Table
-                      tableData={variant.parts.flatMap((part) => part.items)}
-                    />
-                  </View>
-                </View>
-              ))}
-            </View>
-          </View>
+            <Table partId={data.parts[questPartIndex]} />
+          </>
         )}
 
       </View>
