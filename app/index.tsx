@@ -118,7 +118,9 @@ export default function Index() {
                   ]}
                 />
               </Pressable>
-              <CustomText className='text-white text-xl ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
+              <Pressable onPress={toggleSwitch}>
+                <CustomText className='text-white text-xl ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
+              </Pressable>
             </>
           ) : (
 
@@ -130,7 +132,9 @@ export default function Index() {
                 thumbColor={isCompleted ? '#f96900' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
               />
-              <CustomText className='text-white text-xl ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
+              <Pressable onPress={toggleSwitch}>
+                <CustomText className='text-white text-xl ml-2'>{`Mark as ${isCompleted ? 'incomplete' : 'complete'}`}</CustomText>
+              </Pressable>
             </>
           )}
         </View>
