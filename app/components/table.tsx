@@ -36,7 +36,7 @@ const Table = ({tableData} : TableProps) => {
                 <View className='flex flex-col'>
                   <CustomTitleText className='text-white text-base font-semibold'>{item.name}</CustomTitleText>
 
-                  <CustomText className='text-white text-base italic'>{item.traders.map((trader: TraderWithoutTask) => trader.trader.name).join(', ')}</CustomText>
+                  <CustomText className='text-white text-base'>{item.traders.map((trader: TraderWithoutTask) => trader.trader.name).join(', ')}</CustomText>
                 </View>
               </View>
 
