@@ -1,9 +1,12 @@
 import React from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { Shadow } from 'react-native-shadow-2';
 import { useCounter } from '../context/counter-context';
 import { TraderWithoutTask, WeaponWithoutTask } from '../types/types';
 import CustomText from './custom-text';
 import CustomTitleText from './custom-title-text';
+import MinusIcon from './minus-icon';
+import PlusIcon from './plus-icon';
 
 interface TableProps {
   tableData: WeaponWithoutTask[];
@@ -39,13 +42,50 @@ const Table = ({tableData} : TableProps) => {
 
               {/* Amount Cell */}
               <View className='flex-1 flex-row justify-end items-center p-4 pr-0'>
-                <TouchableOpacity onPress={() => decrease(item.slug)} className='bg-lightOrange shadow-orange-glow p-2 rounded-full w-8 h-8 flex justify-center items-center'>
-                  <CustomText className='text-white text-3xl'>-</CustomText>
-                </TouchableOpacity>
+                
+                <Shadow
+                  distance={7}
+                  startColor="rgba(241, 127, 41, 0.2)"
+                  offset={[0, 0]}
+                  sides={{ top: true, bottom: true, start: true, end: true }}
+                  corners={{ topStart: true, topEnd: true, bottomStart: true, bottomEnd: true }}
+                  style={{
+                    borderRadius: 16,
+                    width: 32,
+                    height: 32,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <TouchableOpacity onPress={() => decrease(item.slug)}
+                    className='bg-darkOrange p-2 rounded-full w-8 h-8 flex justify-center items-center'
+                  >
+                    <MinusIcon size={20} color="white" />
+                  </TouchableOpacity>
+                </Shadow> 
                 <CustomText className='mx-4 text-white text-xl font-semibold'>{amount}</CustomText>
-                <TouchableOpacity onPress={() => increase(item.slug)} className='bg-darkOrange shadow-orange-glow p-2 rounded-full w-8 h-8 flex justify-center items-center'>
-                  <CustomText className='text-white text-3xl'>+</CustomText>
-                </TouchableOpacity>
+                <Shadow
+                  distance={7}
+                  startColor="rgba(241, 127, 41, 0.2)"
+                  offset={[0, 0]}
+                  sides={{ top: true, bottom: true, start: true, end: true }}
+                  corners={{ topStart: true, topEnd: true, bottomStart: true, bottomEnd: true }}
+                  style={{
+                    borderRadius: 16,
+                    width: 32,
+                    height: 32,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <TouchableOpacity onPress={() => increase(item.slug)}
+                    className='bg-darkOrange p-2 rounded-full w-8 h-8 flex justify-center items-center'
+                  >
+                    <PlusIcon size={20} color="white" />
+                  </TouchableOpacity>
+                </Shadow>
               </View>
 
             </View>
