@@ -85,7 +85,7 @@ export default function Index() {
                 onPress={toggleSwitch}
                 style={[
                   styles.webSwitch,
-                  { backgroundColor: isCompleted ? '#f8f8f8' : '#767577' },
+                  { backgroundColor: isCompleted ? '#767577' : '#767577' },
                 ]}
               >
                 <View
@@ -93,7 +93,7 @@ export default function Index() {
                     styles.thumb,
                     {
                       left: isCompleted ? 24 : 2,
-                      backgroundColor: isCompleted ? '#f96900' : '#f4f3f4',
+                      backgroundColor: isCompleted ? '#f4f3f4' : '#f4f3f4',
                     },
                   ]}
                 />
@@ -108,8 +108,8 @@ export default function Index() {
               <Switch
                 value={isCompleted}
                 onValueChange={toggleSwitch}
-                trackColor={{ false: '#767577', true: '#f8f8f8' }}
-                thumbColor={isCompleted ? 'rgba(113, 150, 157, 1)' : '#f4f3f4'}
+                trackColor={{ false: '#767577', true: '#767577' }}
+                thumbColor={isCompleted ? '#f4f3f4' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
               />
               <Pressable onPress={toggleSwitch}>
