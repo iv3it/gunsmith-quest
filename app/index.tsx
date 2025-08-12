@@ -109,7 +109,7 @@ export default function Index() {
                 value={isCompleted}
                 onValueChange={toggleSwitch}
                 trackColor={{ false: '#767577', true: '#f8f8f8' }}
-                thumbColor={isCompleted ? '#f96900' : '#f4f3f4'}
+                thumbColor={isCompleted ? 'rgba(113, 150, 157, 1)' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
               />
               <Pressable onPress={toggleSwitch}>

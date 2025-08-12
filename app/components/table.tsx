@@ -51,7 +51,7 @@ const Table = ({partId} : TableProps) => {
         {partData && partData.builds.map((build: Build, partDataIndex: number) =>
           <View key={partDataIndex} className='px-4'>
             <CustomText className='text-2xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</CustomText>
-            <CustomText className={`text-2xl text-darkOrange flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
+            <CustomText className={`text-2xl text-darkGreen flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
             <View className='flex'>
               {build.variants.map((variant: Variant, variantIndex: number) => (
                 <View className='mt-16 mb-8' key={variantIndex}>
@@ -65,7 +65,7 @@ const Table = ({partId} : TableProps) => {
 
                           {/* Name Cell */}
                           <View className='flex-1 flex-row items-center p-4 pl-0'>
-                            <View className='bg-darkOrange w-10 h-10 rounded-full mr-4'></View>
+                            <View className='bg-darkGreen w-10 h-10 rounded-full mr-4'></View>
                             {/* <Image
                               source={{ uri: item.icon }}
                               className='w-8 h-8'
@@ -84,7 +84,7 @@ const Table = ({partId} : TableProps) => {
                             
                             <Shadow
                               distance={7}
-                              startColor="rgba(241, 127, 41, 0.2)"
+                              startColor="rgba(154, 29, 29, 0.3)"
                               offset={[0, 0]}
                               sides={{ top: true, bottom: true, start: true, end: true }}
                               corners={{ topStart: true, topEnd: true, bottomStart: true, bottomEnd: true }}
@@ -98,7 +98,7 @@ const Table = ({partId} : TableProps) => {
                               }}
                             >
                               <TouchableOpacity onPress={() => decrease(item.slug)}
-                                className='bg-darkOrange p-2 rounded-full w-8 h-8 flex justify-center items-center'
+                                className='bg-darkRed p-2 rounded-full w-8 h-8 flex justify-center items-center'
                               >
                                 <MinusIcon size={20} color="white" />
                               </TouchableOpacity>
@@ -106,7 +106,7 @@ const Table = ({partId} : TableProps) => {
                             <CustomText className='mx-4 text-white text-xl font-semibold'>{amount}</CustomText>
                             <Shadow
                               distance={7}
-                              startColor="rgba(241, 127, 41, 0.2)"
+                              startColor="rgba(26, 153, 55, 0.3)"
                               offset={[0, 0]}
                               sides={{ top: true, bottom: true, start: true, end: true }}
                               corners={{ topStart: true, topEnd: true, bottomStart: true, bottomEnd: true }}
@@ -120,7 +120,7 @@ const Table = ({partId} : TableProps) => {
                               }}
                             >
                               <TouchableOpacity onPress={() => increase(item.slug)}
-                                className='bg-darkOrange p-2 rounded-full w-8 h-8 flex justify-center items-center'
+                                className='bg-darkGreen p-2 rounded-full w-8 h-8 flex justify-center items-center'
                               >
                                 <PlusIcon size={20} color="white" />
                               </TouchableOpacity>

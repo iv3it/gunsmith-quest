@@ -10,11 +10,12 @@ module.exports = {
         saira: ['Saira']
       },
       colors: {
-        lightOrange: '#F17F29',
-        darkOrange: '#F96900',
+        darkRed: 'rgb(154, 29, 29)',
+        darkGreen: 'rgb(26, 123, 55)',
       },
       boxShadow: {
-        'orange-glow': '0 0 20px rgba(255, 165, 0, 0.3)',
+        'red-glow': '0 0 20px rgba(154, 29, 29, 0.3)',
+        'green-glow': '0 0 20px rgba(26, 153, 55, 0.3)',
       },
     },
   },
