@@ -1,8 +1,9 @@
 import { SairaExtraCondensed_400Regular } from '@expo-google-fonts/saira-extra-condensed';
 import { Tomorrow_400Regular } from '@expo-google-fonts/tomorrow';
 import { useFonts } from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Switch, View } from "react-native";
+import { ActivityIndicator, Dimensions, Platform, Pressable, ScrollView, StyleSheet, Switch, View } from "react-native";
 import Svg, { Defs, Path, Pattern, Rect } from 'react-native-svg';
 import "../global.css";
 import CustomButton from './components/custom-button';
@@ -129,6 +130,17 @@ export default function Index() {
           </>
         )}
 
+        <View style={styles.gradientWrapper} >
+          <LinearGradient
+            colors={ isCompleted ? ['rgba(26, 123, 55, 0.35)', 'transparent'] : ['rgba(136, 74, 28, 0.35)', 'transparent']
+            }
+            start={{ x: 0.5, y: 1 }}
+            end={{ x: 0.5, y: 0 }}
+            locations={[0, 0.7]}
+            style={styles.gradientOverlay}
+          />
+        </View>
+
       </View>
 
       <Svg width={width} height={height} style={{ position: 'absolute', zIndex: -1, opacity: 0.01 }}>
@@ -146,19 +158,24 @@ export default function Index() {
         <Rect width="100%" height="100%" fill="url(#stripes)" />
       </Svg>
 
-      <ImageBackground 
-          source={require("../assets/images/shadow-orange.png")} 
-          resizeMode="cover" 
-          className='absolute bottom-0'
-          style={{
-            width: '100%',
-          }}
-        ></ImageBackground>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  gradientWrapper: {
+    position: 'relative',
+    bottom: 0,
+    height: 300,
+    width: '100%',
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
   webSwitch: {
     width: 50,
     height: 30,
