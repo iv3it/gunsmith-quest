@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Dimensions, Platform, Pressable, ScrollView, StyleSheet, Switch, View } from "react-native";
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Svg, { Defs, Path, Pattern, Rect } from 'react-native-svg';
 import "../global.css";
 import CustomButton from './components/custom-button';
@@ -52,8 +53,6 @@ export default function Index() {
     fetchPartsList();
   }, []);
 
-  if (!loaded || loading) return <ActivityIndicator />;
-
   const handlePrev = () => {
     setQuestPartIndex((prev) => Math.max(0, prev - 1));
   };
@@ -62,6 +61,21 @@ export default function Index() {
     if (!data) return;
     setQuestPartIndex((prev) => Math.min(data.parts.length - 1, prev + 1));
   };
+
+  const swipeGesture = Gesture.Pan()
+  .activeOffsetX([-50, 50]) // only react if horizontal movement > 50px
+  .failOffsetY([-50, 50])   // fail gesture if vertical movement > 50px
+  .onEnd((event) => {
+    if (!data?.parts) return;
+
+    if (event.translationX < 0) {
+      handleNext()
+    } else if (event.translationX > 0) {
+      handlePrev()
+    }
+  }).runOnJS(true);
+
+  if (!loaded || loading) return <ActivityIndicator />;
 
   return (
     <ScrollView className='bg-[#1c1c1c]'>
@@ -121,13 +135,15 @@ export default function Index() {
         </View>
 
         {data && data.parts && (
-          <>
-            <CustomTitleText className='text-4xl text-white font-bold flex justify-center mb-6 px-4'>
-              Part {data.parts[questPartIndex]}
-            </CustomTitleText>
+          <GestureDetector gesture={swipeGesture}>
+            <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 20 }}>
+              <CustomTitleText className='text-4xl text-white font-bold flex justify-center mb-6 px-4'>
+                Part {data.parts[questPartIndex]}
+              </CustomTitleText>
 
-            <Table partId={data.parts[questPartIndex]} />
-          </>
+              <Table partId={data.parts[questPartIndex]} />
+            </ScrollView>
+          </GestureDetector>
         )}
 
         <View style={styles.gradientWrapper} >
