@@ -2,14 +2,15 @@ import { SairaExtraCondensed_400Regular } from '@expo-google-fonts/saira-extra-c
 import { Tomorrow_400Regular } from '@expo-google-fonts/tomorrow';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, Platform, Pressable, ScrollView, StyleSheet, Switch, View } from "react-native";
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Dimensions, Platform, Pressable, ScrollView, StyleSheet, Switch, View } from "react-native";
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Svg, { Defs, Path, Pattern, Rect } from 'react-native-svg';
 import "../global.css";
 import CustomButton from './components/custom-button';
 import CustomText from './components/custom-text';
 import CustomTitleText from './components/custom-title-text';
+import LoadingDots from './components/loading-dots';
 import Table from './components/table';
 import { useCounter } from './context/counter-context';
 import { QuestParts } from './types/types';
@@ -32,10 +33,30 @@ export default function Index() {
   const { completed, toggleCompleted } = useCounter();
   const currentPart = data?.parts[questPartIndex];
   const isCompleted = completed?.[currentPart?.toString() ?? ''] || false;
+
+  const [showOverlay, setShowOverlay] = useState(true);
+  const [minDelayPassed, setMinDelayPassed] = useState(false);
+  const overlayOpacity = useRef(new Animated.Value(1)).current;
   
   const toggleSwitch = () => {
     if (currentPart) toggleCompleted(currentPart.toString());
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMinDelayPassed(true), 1500); // visible for at least 1.5s
+    return () => clearTimeout(timer);
+  }, []);
+
+  // hide overlay only when everything is ready
+  useEffect(() => {
+    if (loaded && !loading && minDelayPassed) {
+      Animated.timing(overlayOpacity, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }).start(() => setShowOverlay(false));
+    }
+  }, [loaded, loading, minDelayPassed]);
 
   useEffect(() => {
     const fetchPartsList = async () => {
@@ -75,10 +96,23 @@ export default function Index() {
     }
   }).runOnJS(true);
 
-  if (!loaded || loading) return <ActivityIndicator />;
-
   return (
     <View style={{ flex: 1 }}>
+      {showOverlay && (
+        <Animated.View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: '#1c1c1c',
+            justifyContent: 'center',
+            alignItems: 'center',
+            opacity: overlayOpacity,
+            zIndex: 999,
+          }}
+        >
+          <LoadingDots />
+        </Animated.View>
+      )}
+
       <ScrollView className='bg-[#1c1c1c]'>
         <View className='flex justify-center'>
           <View className='flex flex-row justify-between px-4 py-8'>
