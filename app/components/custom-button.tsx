@@ -35,7 +35,7 @@ const CustomButton = ({ title, onPress, disabled } : CustomButtonProps) => {
           fill={disabled ? "transparent" : "#1c1c1c"}
         />
       </Svg>
-      <View style={[styles.textContainer, { width: BUTTON_W, height: BUTTON_H }]}>
+      <View style={styles.textContainer}>
         <CustomText style={[styles.text, disabled && styles.disabledText]}>{title}</CustomText>
       </View>
     </Pressable>
@@ -45,9 +45,7 @@ const CustomButton = ({ title, onPress, disabled } : CustomButtonProps) => {
 const styles = StyleSheet.create({
   wrapper: { width: BUTTON_W, height: BUTTON_H, position: 'relative' },
   textContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
+    ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
   },
