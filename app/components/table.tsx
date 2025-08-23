@@ -13,7 +13,7 @@ interface TableProps {
   partId: number;
 }
 
-const Table = ({partId} : TableProps) => {
+export default function Table ({partId} : TableProps) {
   const [loading, setLoading] = useState(true);
   
   const { amounts, increase, decrease, completed } = useCounter();
@@ -141,5 +141,3 @@ const Table = ({partId} : TableProps) => {
     </ScrollView>
   );
 };
-
-export default Table;

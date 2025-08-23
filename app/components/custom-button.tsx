@@ -13,7 +13,7 @@ const BUTTON_W = 150;
 const BUTTON_H = 50;
 const CUT_SIZE = 20;
 
-const CustomButton = ({ title, onPress, disabled } : CustomButtonProps) => {
+export default function CustomButton ({ title, onPress, disabled } : CustomButtonProps) {
   return (
     <Pressable onPress={onPress} style={[styles.wrapper, disabled && styles.disabledWrapper]}>
       <LinearGradient
@@ -60,5 +60,3 @@ const styles = StyleSheet.create({
     color: '#d1d1d1',
   },
 });
-
-export default CustomButton;
