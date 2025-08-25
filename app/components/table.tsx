@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
@@ -6,8 +7,6 @@ import { Build, QuestData, TraderWithoutTask, Variant, WeaponWithoutTask } from 
 import { fetchQuestPart } from '../utils/questPart';
 import CustomText from './custom-text';
 import CustomTitleText from './custom-title-text';
-import MinusIcon from './minus-icon';
-import PlusIcon from './plus-icon';
 
 interface TableProps {
   partId: number;
@@ -100,7 +99,7 @@ export default function Table ({partId} : TableProps) {
                               <TouchableOpacity onPress={() => decrease(item.slug)}
                                 className='bg-darkRed p-2 rounded-full w-8 h-8 flex justify-center items-center'
                               >
-                                <MinusIcon size={20} color="white" />
+                                <Ionicons name="remove-outline" size={20} color="#fff" />
                               </TouchableOpacity>
                             </Shadow> 
                             <CustomText className='mx-4 text-white text-xl font-semibold'>{amount}</CustomText>
@@ -122,7 +121,7 @@ export default function Table ({partId} : TableProps) {
                               <TouchableOpacity onPress={() => increase(item.slug)}
                                 className='bg-darkGreen p-2 rounded-full w-8 h-8 flex justify-center items-center'
                               >
-                                <PlusIcon size={20} color="white" />
+                                <Ionicons name="add-outline" size={20} color="#fff" />
                               </TouchableOpacity>
                             </Shadow>
                           </View>
