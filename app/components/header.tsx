@@ -44,8 +44,6 @@ export default function Header ({}) {
     }).start();
 
     router.push("/search");
-
-    setTimeout(() => inputRef.current?.focus(), 100);
   };
 
   const handleBlur = () => {
@@ -96,6 +94,7 @@ export default function Header ({}) {
                 <Ionicons name="search-outline" size={24} color="#fff" />
               </Animated.View>
               <TextInput
+                autoFocus
                 ref={inputRef}
                 placeholder="Search..."
                 placeholderTextColor="#aaa"
@@ -138,10 +137,7 @@ const styles = StyleSheet.create({
     height: 70,
   },
   inputWrapper: {
-    flexShrink: 1,
-    flexBasis: 0,
     flex: 1,
-    alignItems: 'center',
     flexDirection: 'row-reverse',
   },
   inputContainer: {

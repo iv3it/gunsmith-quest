@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { StatusBar } from "react-native";
+import { Keyboard, Platform, StatusBar, TouchableWithoutFeedback } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "./components/header";
@@ -13,13 +13,26 @@ export default function RootLayout() {
         <CounterProvider>
           <StatusBar translucent={false} backgroundColor="#1c1c1c" barStyle="light-content" />
 
-          <SafeAreaView style={{ flex: 1 }}>
-            <Header></Header>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="index" />
-              <Stack.Screen name="search" />
-            </Stack>
-          </SafeAreaView>
+          {Platform.OS === "web" ? (
+            <SafeAreaView style={{ flex: 1 }}>
+              <Header></Header>
+              <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="index" />
+                <Stack.Screen name="search" />
+              </Stack>
+            </SafeAreaView>
+          ) : (
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+              <SafeAreaView style={{ flex: 1 }}>
+                <Header></Header>
+                <Stack screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="index" />
+                  <Stack.Screen name="search" />
+                </Stack>
+              </SafeAreaView>
+            </TouchableWithoutFeedback>
+          )}
+          
         </CounterProvider>
       </SearchProvider>
     </GestureHandlerRootView>
