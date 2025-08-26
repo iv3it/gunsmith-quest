@@ -89,15 +89,13 @@ export default function Table ({partId} : TableProps) {
                               corners={{ topStart: true, topEnd: true, bottomStart: true, bottomEnd: true }}
                               style={{
                                 borderRadius: 16,
-                                width: 32,
-                                height: 32,
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                               }}
                             >
                               <TouchableOpacity onPress={() => decrease(item.slug)}
-                                className='bg-darkRed p-2 rounded-full w-8 h-8 flex justify-center items-center'
+                                className='bg-darkRed p-2 rounded-full flex justify-center items-center'
                               >
                                 <Ionicons name="remove-outline" size={20} color="#fff" />
                               </TouchableOpacity>
@@ -111,15 +109,13 @@ export default function Table ({partId} : TableProps) {
                               corners={{ topStart: true, topEnd: true, bottomStart: true, bottomEnd: true }}
                               style={{
                                 borderRadius: 16,
-                                width: 32,
-                                height: 32,
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                               }}
                             >
                               <TouchableOpacity onPress={() => increase(item.slug)}
-                                className='bg-darkGreen p-2 rounded-full w-8 h-8 flex justify-center items-center'
+                                className='bg-darkGreen p-2 rounded-full flex justify-center items-center'
                               >
                                 <Ionicons name="add-outline" size={20} color="#fff" />
                               </TouchableOpacity>
