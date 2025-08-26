@@ -174,7 +174,7 @@ export default function Index() {
               {data && data.parts && (
                 <GestureDetector gesture={swipeGesture}>
                   <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 20 }}>
-                    <CustomTitleText className='text-4xl text-white font-bold flex justify-center mb-6 px-4'>
+                    <CustomTitleText className='text-4xl text-white flex justify-center mb-6 px-4'>
                       Part {data.parts[questPartIndex]}
                     </CustomTitleText>
 

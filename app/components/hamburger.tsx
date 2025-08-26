@@ -1,6 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import CustomText from "./custom-text";
+import CustomTitleText from "./custom-title-text";
 
 export default function HamburgerMenu() {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -28,14 +30,14 @@ export default function HamburgerMenu() {
             </TouchableOpacity>
 
             {/* Menu */}
-            <Text style={styles.menuTitle}>Menu</Text>
-            <Text style={styles.menuItem}>Item 1</Text>
+            <CustomTitleText style={styles.menuTitle}>Menu</CustomTitleText>
+            <CustomTitleText style={styles.menuItem}>Item 1</CustomTitleText>
 
             <View style={{ flex: 1 }} />
 
             {/* Footer */}
             <View style={styles.footer}>
-              <Text style={styles.footerText}>© 2025</Text>
+              <CustomText style={styles.footerText}>© 2025</CustomText>
             </View>
           </View>
         </View>
@@ -62,7 +64,6 @@ const styles = StyleSheet.create({
   },
   menuTitle: {
     fontSize: 20,
-    fontWeight: "bold",
     color: "white",
     marginBottom: 16,
   },
