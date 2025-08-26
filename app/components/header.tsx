@@ -3,7 +3,6 @@ import { Link, useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import { Animated, Easing, Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { useSearch } from "../context/search-context";
-import CustomTitleText from "./custom-title-text";
 import HamburgerMenu from "./hamburger";
 
 export default function Header ({}) {
@@ -81,7 +80,6 @@ export default function Header ({}) {
           source={require('@/assets/images/gunsmith-logo.png')} 
           style={styles.image}
           />
-        <CustomTitleText className="text-white">Gunsmith Quest</CustomTitleText>
       </Link>
 
       <View style={styles.rightContainer} className="mr-4">
