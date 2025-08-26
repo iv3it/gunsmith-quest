@@ -11,7 +11,7 @@ export default function Header ({}) {
 
   const router = useRouter();
 
-  const inputWidth = useRef(new Animated.Value(0)).current;
+  const inputFlex = useRef(new Animated.Value(0)).current;
   const iconLeft = useRef(new Animated.Value(0)).current;
   const iconOpacity = useRef(new Animated.Value(1)).current;
   const inputRef = useRef<TextInput>(null);
@@ -22,8 +22,8 @@ export default function Header ({}) {
   const handlePressSearch = () => {
     setExpanded(true);
 
-    Animated.timing(inputWidth, {
-      toValue: MAX_WIDTH,
+    Animated.timing(inputFlex, {
+      toValue: 1,
       duration: 250,
       easing: Easing.out(Easing.quad),
       useNativeDriver: false,
@@ -50,7 +50,7 @@ export default function Header ({}) {
 
   const handleBlur = () => {
     if (query === "") {
-      Animated.timing(inputWidth, {
+      Animated.timing(inputFlex, {
         toValue: 0,
         duration: 200,
         easing: Easing.out(Easing.quad),
@@ -90,21 +90,23 @@ export default function Header ({}) {
             </TouchableOpacity>
           </Animated.View>
         ) : (
-          <Animated.View style={[styles.inputContainer, { width: inputWidth }]}>
-            <Animated.View style={{ position: "absolute", left: iconLeft, top: 6 }}>
-              <Ionicons name="search-outline" size={24} color="#fff" />
+          <View style={styles.inputWrapper}>
+            <Animated.View style={[styles.inputContainer, { flex: inputFlex }]}>
+              <Animated.View style={{ position: "absolute", left: iconLeft }}>
+                <Ionicons name="search-outline" size={24} color="#fff" />
+              </Animated.View>
+              <TextInput
+                ref={inputRef}
+                placeholder="Search..."
+                placeholderTextColor="#aaa"
+                value={query}
+                onChangeText={setQuery}
+                onBlur={handleBlur}
+                style={[styles.input, { paddingLeft: 40 }]}
+                className="font-tomorrow"
+              />
             </Animated.View>
-            <TextInput
-              ref={inputRef}
-              placeholder="Search..."
-              placeholderTextColor="#aaa"
-              value={query}
-              onChangeText={setQuery}
-              onBlur={handleBlur}
-              style={[styles.input, { paddingLeft: 40 }]}
-              className="font-tomorrow"
-            />
-          </Animated.View>
+          </View>
         )}
         <HamburgerMenu />
       </View>
@@ -119,7 +121,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rightContainer: {
+    flex: 1,
     flexDirection: 'row',
+    justifyContent: "flex-end",
     alignItems: 'center',
     gap: 12,
   },
@@ -132,6 +136,13 @@ const styles = StyleSheet.create({
   image: {
     width: 70,
     height: 70,
+  },
+  inputWrapper: {
+    flexShrink: 1,
+    flexBasis: 0,
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
   },
   inputContainer: {
     height: 36,
