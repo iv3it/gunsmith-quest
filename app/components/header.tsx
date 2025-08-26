@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useRouter } from "expo-router";
-import { useRef, useState } from "react";
+import { Link, usePathname, useRouter } from "expo-router";
+import { useEffect, useRef, useState } from "react";
 import { Animated, Easing, Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { useSearch } from "../context/search-context";
 import HamburgerMenu from "./hamburger";
@@ -10,6 +10,7 @@ export default function Header ({}) {
   const { query, setQuery } = useSearch();
 
   const router = useRouter();
+  const pathname = usePathname();  
 
   const inputFlex = useRef(new Animated.Value(0)).current;
   const iconLeft = useRef(new Animated.Value(0)).current;
@@ -18,6 +19,14 @@ export default function Header ({}) {
 
   const MAX_WIDTH = 200;
   const ICON_MARGIN = 8;
+
+  useEffect(() => {
+    // collapse and clear value when we leave /search
+    if (pathname !== "/search") {
+      setExpanded(false);
+      setQuery("");
+    }
+  }, [pathname]);
 
   const handlePressSearch = () => {
     setExpanded(true);
