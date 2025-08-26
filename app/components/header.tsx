@@ -102,6 +102,7 @@ export default function Header ({}) {
               onChangeText={setQuery}
               onBlur={handleBlur}
               style={[styles.input, { paddingLeft: 40 }]}
+              className="font-tomorrow"
             />
           </Animated.View>
         )}
