@@ -1,18 +1,51 @@
 import { useEffect, useState } from "react";
-import { FlatList, Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
 import CustomTitleText from "./components/custom-title-text";
+import ItemsList from "./components/items-list";
 import { useSearch } from "./context/search-context";
+import { WeaponWithoutTask } from "./types/types";
 
-const allItems = ["item 1", "item 2", "item 3"];
+const allItems = [
+  {
+    "slug": "tbl",
+    "name": "NcSTAR Tactical Blue Laser",
+    "icon": "https://gunsmith.quest/static/tbl.png",
+    "traders": [
+      {
+        "trader": {
+          "slug": "skier",
+          "name": "Skier"
+        },
+        "loyalty": 1,
+        "isBarter": false
+      }
+    ]
+  },
+  {
+    "slug": "xc1",
+    "name": "SureFire XC1 tactical flashlight",
+    "icon": "https://gunsmith.quest/static/xc1.png",
+    "traders": [
+      {
+        "trader": {
+          "slug": "mechanic",
+          "name": "Mechanic"
+        },
+        "loyalty": 1,
+        "isBarter": false
+      }
+    ]
+  }
+]
 
 export default function SearchPage() {
   const { query } = useSearch();
-  const [results, setResults] = useState<string[]>([]);
+  const [results, setResults] = useState<WeaponWithoutTask[]>([]);
 
   useEffect(() => {
     if (query.length >= 2) {
       const filtered = allItems.filter((item) =>
-        item.toLowerCase().includes(query.toLowerCase())
+        item.name.toLowerCase().includes(query.toLowerCase())
       );
       setResults(filtered);
     } else {
@@ -26,13 +59,7 @@ export default function SearchPage() {
         {query.length < 2 ? (
           <CustomTitleText className="text-gray-400">Search by item name...</CustomTitleText>
         ) : (
-          <FlatList
-            data={results}
-            keyExtractor={(item) => item}
-            renderItem={({ item }) => (
-              <Text className="text-white text-lg py-2">{item}</Text>
-            )}
-          />
+          <ItemsList items={results}/>
         )}
       </View>
     </TouchableWithoutFeedback>

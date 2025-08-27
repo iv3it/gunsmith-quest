@@ -11,7 +11,7 @@ import CustomButton from './components/custom-button';
 import CustomText from './components/custom-text';
 import CustomTitleText from './components/custom-title-text';
 import LoadingDots from './components/loading-dots';
-import Table from './components/table';
+import WeaponBuild from './components/weapon-build';
 import { useCounter } from './context/counter-context';
 import { QuestParts } from './types/types';
 import { fetchQuestPartsList } from './utils/questPartsList';
@@ -178,7 +178,7 @@ export default function Index() {
                       Part {data.parts[questPartIndex]}
                     </CustomTitleText>
 
-                    <Table partId={data.parts[questPartIndex]} />
+                    <WeaponBuild partId={data.parts[questPartIndex]} />
                   </ScrollView>
                 </GestureDetector>
               )}
