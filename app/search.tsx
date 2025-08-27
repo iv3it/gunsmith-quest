@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import CustomTitleText from "./components/custom-title-text";
 import { useSearch } from "./context/search-context";
 
@@ -21,18 +21,20 @@ export default function SearchPage() {
   }, [query]);
 
   return (
-    <View className="flex-1 bg-[#1c1c1c] px-4 pt-4">
-      {query.length < 2 ? (
-        <CustomTitleText className="text-gray-400">Search by item name...</CustomTitleText>
-      ) : (
-        <FlatList
-          data={results}
-          keyExtractor={(item) => item}
-          renderItem={({ item }) => (
-            <Text className="text-white text-lg py-2">{item}</Text>
-          )}
-        />
-      )}
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View className="flex-1 bg-[#1c1c1c] px-4 pt-4">
+        {query.length < 2 ? (
+          <CustomTitleText className="text-gray-400">Search by item name...</CustomTitleText>
+        ) : (
+          <FlatList
+            data={results}
+            keyExtractor={(item) => item}
+            renderItem={({ item }) => (
+              <Text className="text-white text-lg py-2">{item}</Text>
+            )}
+          />
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
