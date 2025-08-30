@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useCounter } from '../context/counter-context';
 import { Build, QuestData, Variant } from '../types/types';
 import { fetchQuestPart } from '../utils/questPart';
 import CustomText from './custom-text';
 import ItemsList from './items-list';
+import LoadingDots from './loading-dots';
 
 interface TableProps {
   partId: number;
@@ -37,7 +38,7 @@ export default function WeaponBuild ({partId} : TableProps) {
 
   
   if (loading) {
-    return <ActivityIndicator />;
+    return <LoadingDots />;
   }
 
   const isCompleted = !!completed?.[partId];
