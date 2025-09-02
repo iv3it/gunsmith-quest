@@ -3,44 +3,22 @@ import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
 import CustomTitleText from "./components/custom-title-text";
 import ItemsList from "./components/items-list";
 import { useSearch } from "./context/search-context";
-import { WeaponWithoutTask } from "./types/types";
-
-const allItems = [
-  {
-    "slug": "tbl",
-    "name": "NcSTAR Tactical Blue Laser",
-    "icon": "https://gunsmith.quest/static/tbl.png",
-    "traders": [
-      {
-        "trader": {
-          "slug": "skier",
-          "name": "Skier"
-        },
-        "loyalty": 1,
-        "isBarter": false
-      }
-    ]
-  },
-  {
-    "slug": "xc1",
-    "name": "SureFire XC1 tactical flashlight",
-    "icon": "https://gunsmith.quest/static/xc1.png",
-    "traders": [
-      {
-        "trader": {
-          "slug": "mechanic",
-          "name": "Mechanic"
-        },
-        "loyalty": 1,
-        "isBarter": false
-      }
-    ]
-  }
-]
+import { WeaponWithQuestParts } from "./types/types";
+import { fetchAllItemsList } from "./utils/allItemsList";
 
 export default function SearchPage() {
   const { query } = useSearch();
-  const [results, setResults] = useState<WeaponWithoutTask[]>([]);
+  const [allItems, setAllItems] = useState<WeaponWithQuestParts[]>([]);
+  const [results, setResults] = useState<WeaponWithQuestParts[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      const response = await fetchAllItemsList();
+      setAllItems(response.items)
+    };
+
+    load();
+  }, [])
 
   useEffect(() => {
     if (query.length >= 2) {

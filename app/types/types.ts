@@ -24,6 +24,10 @@ export type WeaponWithoutTask = Omit<Weapon, 'traders'> & {
   traders: TraderWithoutTask[];
 };
 
+export type WeaponWithQuestParts = Omit<Weapon, 'traders'> & {
+  questParts: number[];
+};
+
 export interface Variant {
   parts: {
     items: WeaponWithoutTask[];

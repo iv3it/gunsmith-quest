@@ -4,10 +4,18 @@ import { Shadow } from "react-native-shadow-2";
 import CustomText from "../components/custom-text";
 import CustomTitleText from "../components/custom-title-text";
 import { useCounter } from "../context/counter-context";
-import { TraderWithoutTask, WeaponWithoutTask } from "../types/types";
+import { TraderWithoutTask, WeaponWithoutTask, WeaponWithQuestParts } from "../types/types";
+
+function hasQuestParts(item: WeaponWithoutTask | WeaponWithQuestParts): item is WeaponWithQuestParts {
+  return (item as WeaponWithQuestParts).questParts !== undefined;
+}
+
+function hasTraders(item: WeaponWithoutTask | WeaponWithQuestParts): item is WeaponWithoutTask {
+  return (item as WeaponWithoutTask).traders !== undefined;
+}
 
 interface ItemsListProps {
-  items: WeaponWithoutTask[];
+  items: (WeaponWithoutTask | WeaponWithQuestParts)[];
 }
 
 export default function ItemsList({ items }: ItemsListProps) {
@@ -15,7 +23,7 @@ export default function ItemsList({ items }: ItemsListProps) {
 
   return (
     <View>
-      {items.map((item: WeaponWithoutTask, index: number) => {
+      {items.map((item, index: number) => {
         const amount = amounts[item.slug] || 0;
 
         return (
@@ -33,7 +41,13 @@ export default function ItemsList({ items }: ItemsListProps) {
               <View className='flex flex-col'>
                 <CustomTitleText className='text-white text-base font-semibold'>{item.name}</CustomTitleText>
 
-                <CustomText className='text-white text-base'>{item.traders.map((trader: TraderWithoutTask) => trader.trader.name).join(', ')}</CustomText>
+                {hasTraders(item) && item.traders &&
+                  <CustomText className='text-white text-base'>{item.traders.map((trader: TraderWithoutTask) => trader.trader.name).join(', ')}</CustomText>
+                }
+
+                {hasQuestParts(item) && item.questParts &&
+                  <CustomText className='text-white text-base'>{item.questParts.join(", ")}</CustomText>
+                }
               </View>
             </View>
 
