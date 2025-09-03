@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
+import { Image } from 'expo-image';
 import { Link, usePathname, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { Animated, Easing, Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Animated, Easing, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { useSearch } from "../context/search-context";
 import HamburgerMenu from "./hamburger";
 
@@ -85,8 +86,9 @@ export default function Header ({}) {
       <Link href="/" style={styles.leftContainer}>
         <Image
           source={require('@/assets/images/gunsmith-logo.png')} 
+          cachePolicy="memory-disk"
           style={styles.image}
-          />
+        />
       </Link>
 
       <View style={styles.rightContainer} className="mr-4">
