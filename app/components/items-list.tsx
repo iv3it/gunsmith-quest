@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 import CustomText from "../components/custom-text";
 import CustomTitleText from "../components/custom-title-text";
@@ -31,12 +31,16 @@ export default function ItemsList({ items }: ItemsListProps) {
 
             {/* Name Cell */}
             <View className='flex-1 flex-row items-center p-4 pl-0'>
-              <View className='bg-darkGreen w-10 h-10 rounded-full mr-4'></View>
-              {/* <Image
-                source={{ uri: item.icon }}
-                className='w-8 h-8'
-                resizeMode='contain'
-              /> */}
+
+              {item.icon ? (
+                <Image
+                  source={{ uri: item.icon }}
+                  className='w-24 h-16 mr-4'
+                  resizeMode='contain'
+                />
+              ) : (
+                <Ionicons name="ban-outline" size={36} color="white"  className="mr-4"/>
+              )}
               
               <View className='flex flex-col'>
                 <CustomTitleText className='text-white text-base font-semibold'>{item.name}</CustomTitleText>
