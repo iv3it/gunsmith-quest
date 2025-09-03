@@ -5,13 +5,13 @@ import { Build, QuestData, Variant } from '../types/types';
 import { fetchQuestPart } from '../utils/questPart';
 import CustomText from './custom-text';
 import ItemsList from './items-list';
-import LoadingDots from './loading-dots';
 
-interface TableProps {
+interface WeaponBuildProps {
   partId: number;
+  onReady: () => void;
 }
 
-export default function WeaponBuild ({partId} : TableProps) {
+export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
   const [loading, setLoading] = useState(true);
   
   const { completed } = useCounter();
@@ -36,10 +36,11 @@ export default function WeaponBuild ({partId} : TableProps) {
       fetchPart();
   }, [partId]);
 
-  
-  if (loading) {
-    return <LoadingDots />;
-  }
+  useEffect(() => {
+    if (!loading && partData) {
+      onReady();
+    }
+  }, [loading, partData]);
 
   const isCompleted = !!completed?.[partId];
 

@@ -36,6 +36,8 @@ export default function Index() {
 
   const [showOverlay, setShowOverlay] = useState(true);
   const overlayOpacity = useRef(new Animated.Value(1)).current;
+
+  const [weaponBuildReady, setWeaponBuildReady] = useState(false);
   
   const toggleSwitch = () => {
     if (id) toggleCompleted(id.toString());
@@ -43,14 +45,14 @@ export default function Index() {
 
   // hide overlay only when everything is ready
   useEffect(() => {
-    if (fontsLoaded && !loading) {
+    if (fontsLoaded && !loading && weaponBuildReady) {
       Animated.timing(overlayOpacity, {
         toValue: 0,
         duration: 400,
         useNativeDriver: true,
       }).start(() => setShowOverlay(false));
     }
-  }, [fontsLoaded, loading]);
+  }, [fontsLoaded, loading, weaponBuildReady]);
 
   useEffect(() => {
     const fetchPartsList = async () => {
@@ -68,8 +70,8 @@ export default function Index() {
     fetchPartsList();
   }, []);
 
-  if (!id || !data || !data.parts) {
-    return <LoadingDots />;
+  if (!data || !data.parts) {
+    return null;
   }
 
   const currentIndex = data.parts.findIndex((p) => p.toString() === id.toString());
@@ -191,7 +193,7 @@ export default function Index() {
                       Part {id}
                     </CustomTitleText>
 
-                    <WeaponBuild partId={Number(id)} />
+                    <WeaponBuild partId={Number(id)} onReady={() => setWeaponBuildReady(true)} />
                   </ScrollView>
                 </GestureDetector>
               )}
