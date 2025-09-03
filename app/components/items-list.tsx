@@ -39,24 +39,24 @@ export default function ItemsList({ items }: ItemsListProps) {
                   resizeMode='contain'
                 />
               ) : (
-                <Ionicons name="ban-outline" size={36} color="white"  className="mr-4"/>
+                <Ionicons name="ban-outline" size={36} color="white" className="mr-4"/>
               )}
               
-              <View className='flex flex-col'>
+              <View className='flex flex-col flex-1'>
                 <CustomTitleText className='text-white text-base font-semibold'>{item.name}</CustomTitleText>
 
-                {hasTraders(item) && item.traders &&
+                {hasTraders(item) && item.traders && item.traders.length > 0 &&
                   <CustomText className='text-white text-base'>{item.traders.map((trader: TraderWithoutTask) => trader.trader.name).join(', ')}</CustomText>
                 }
 
-                {hasQuestParts(item) && item.questParts &&
-                  <CustomText className='text-white text-base'>{item.questParts.length > 0 ? `Parts: ${item.questParts.join(", ")}` : ''}</CustomText>
+                {hasQuestParts(item) && item.questParts && item.questParts.length > 0 &&
+                  <CustomText className='text-white text-base'>Parts: {item.questParts.join(", ")}</CustomText>
                 }
               </View>
             </View>
 
             {/* Amount Cell */}
-            <View className='flex-1 flex-row justify-end items-center p-4 pr-0'>
+            <View className='flex-shrink-0 flex-row justify-end items-center p-4 pr-0'>
               
               <Shadow
                 distance={7}
