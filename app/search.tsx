@@ -23,7 +23,7 @@ export default function SearchPage() {
   useEffect(() => {
     if (query.length >= 2) {
       const filtered = allItems.filter((item) =>
-        item.name.toLowerCase().includes(query.toLowerCase())
+        item.name.toLowerCase().includes(query.toLowerCase()) || item.slug.toLowerCase().includes(query.toLowerCase())
       );
       setResults(filtered);
     } else {
