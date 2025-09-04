@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { useCounter } from '../context/counter-context';
 import { Build, QuestData, Variant } from '../types/types';
 import { fetchQuestPart } from '../utils/questPart';
@@ -17,6 +17,8 @@ export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
   const { completed } = useCounter();
 
   const [partData, setPartData] = useState<QuestData | undefined>(undefined);
+
+  const [selectedVariant, setSelectedVariant] = useState(0);
 
   useEffect(() => {
       if (partId < 0) return;
@@ -50,20 +52,30 @@ export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
         {partData && partData.builds.map((build: Build, partDataIndex: number) =>
           <View key={partDataIndex} className='px-4'>
             <CustomText className='text-2xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</CustomText>
-            <CustomText className={`text-2xl text-darkGreen flex justify-center ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
-            <View className='flex'>
+            <CustomText className={`text-2xl text-darkGreen flex justify-center mb-6 ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
+
+            {/* Tabs */}
+            <View className="flex-row mb-6">
               {build.variants.map((variant: Variant, variantIndex: number) => (
-                <View className='mt-16 mb-8' key={variantIndex}>
-                  <CustomText className='text-xl text-white font-semibold'>VARIANT {variantIndex + 1}</CustomText>
-                  <View>
-                    <ItemsList items={variant.parts.flatMap((part) => part.items)}/>
-                  </View>
-                </View>
+                <Pressable
+                  key={variantIndex}
+                  onPress={() => setSelectedVariant(variantIndex)}
+                  className="mr-6"
+                >
+                  <CustomText className={`text-xl ${selectedVariant === variantIndex ? 'text-white pb-1 border-gray-50 border-b-2' : 'text-gray-400'}`}>
+                    VARIANT {variantIndex + 1}
+                  </CustomText>
+                </Pressable>
               ))}
             </View>
+
+            {/* Active Variant Content */}
+            <View className="mt-4 mb-8">
+              <ItemsList items={build.variants[selectedVariant].parts.flatMap((part) => part.items)} />
+            </View>
+
           </View>
         )}
-
       </View>
     </ScrollView>
   );
