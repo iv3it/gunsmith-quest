@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from 'expo-image';
-import { TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 import CustomText from "../components/custom-text";
 import CustomTitleText from "../components/custom-title-text";
@@ -23,12 +23,14 @@ export default function ItemsList({ items }: ItemsListProps) {
   const { amounts, increase, decrease } = useCounter();
 
   return (
-    <View>
-      {items.map((item, index: number) => {
+    <FlatList
+      data={items}
+      keyExtractor={item => item.slug}
+      renderItem={({ item }) => {
         const amount = amounts[item.slug] || 0;
 
         return (
-          <View key={index} className='flex-row items-stretch border-b border-[#424242]'>
+          <View className='flex-row items-stretch border-b border-[#424242]'>
 
             {/* Name Cell */}
             <View className='flex-1 flex-row items-center p-4 pl-0'>
@@ -109,7 +111,7 @@ export default function ItemsList({ items }: ItemsListProps) {
 
           </View>
         )
-      })}
-    </View>
+      }}
+    />
   );
 }
