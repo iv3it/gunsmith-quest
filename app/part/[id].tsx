@@ -4,7 +4,7 @@ import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, Platform, Pressable, ScrollView, StyleSheet, Switch, View } from "react-native";
+import { Animated, Dimensions, FlatList, Platform, Pressable, StyleSheet, Switch, View } from "react-native";
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Svg, { Defs, Path, Pattern, Rect } from 'react-native-svg';
 import "../../global.css";
@@ -112,7 +112,7 @@ export default function Index() {
   }).runOnJS(true);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} className='bg-[#1c1c1c]'>
       {showOverlay && (
         <Animated.View
           style={{
@@ -129,9 +129,12 @@ export default function Index() {
       )}
 
       {(fontsLoaded && !loading) && (
-        <View style={{ flex: 1 }}>
-          <ScrollView className='bg-[#1c1c1c]'>
-            <View className='flex justify-center'>
+        <FlatList
+          data={[]}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={null}
+          ListHeaderComponent={
+            <View>
               <View className='flex flex-row justify-between px-4 py-8'>
                 <CustomButton
                   title="Back"
@@ -197,36 +200,35 @@ export default function Index() {
               </GestureDetector>
 
             </View>
-
-            <Svg width={width} height={height} style={{ position: 'absolute', zIndex: -1, opacity: 0.01 }}>
-              <Defs>
-                <Pattern
-                  id="stripes"
-                  patternUnits="userSpaceOnUse"
-                  width="20"
-                  height="20"
-                  patternTransform="rotate(45)"
-                >
-                  <Path d="M0 0 L20 0 L20 10 L0 10 Z" fill="#FFC0CB" />
-                </Pattern>
-              </Defs>
-              <Rect width="100%" height="100%" fill="url(#stripes)" />
-            </Svg>
-
-          </ScrollView>
-
-          <View style={styles.gradientWrapper} pointerEvents='none'>
-            <LinearGradient
-              colors={ isCompleted ? ['rgba(26, 123, 55, 0.35)', 'transparent'] : ['rgba(136, 74, 28, 0.35)', 'transparent']
-              }
-              start={{ x: 0.5, y: 1 }}
-              end={{ x: 0.5, y: 0 }}
-              locations={[0, 0.7]}
-              style={styles.gradientOverlay}
-            />
-          </View>
-        </View>
+          }
+        />
       )}
+
+      <Svg width={width} height={height} style={{ position: 'absolute', zIndex: -1, opacity: 0.01 }}>
+        <Defs>
+          <Pattern
+            id="stripes"
+            patternUnits="userSpaceOnUse"
+            width="20"
+            height="20"
+            patternTransform="rotate(45)"
+          >
+            <Path d="M0 0 L20 0 L20 10 L0 10 Z" fill="#FFC0CB" />
+          </Pattern>
+        </Defs>
+        <Rect width="100%" height="100%" fill="url(#stripes)" />
+      </Svg>
+
+      <View style={styles.gradientWrapper} pointerEvents='none'>
+        <LinearGradient
+          colors={ isCompleted ? ['rgba(26, 123, 55, 0.35)', 'transparent'] : ['rgba(136, 74, 28, 0.35)', 'transparent']
+          }
+          start={{ x: 0.5, y: 1 }}
+          end={{ x: 0.5, y: 0 }}
+          locations={[0, 0.7]}
+          style={styles.gradientOverlay}
+        />
+      </View>
 
     </View>
   );
