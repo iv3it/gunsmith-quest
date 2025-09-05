@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { View } from "react-native";
 import CustomTitleText from "./components/custom-title-text";
 import ItemsList from "./components/items-list";
 import { useSearch } from "./context/search-context";
@@ -32,14 +32,12 @@ export default function SearchPage() {
   }, [query]);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View className="flex-1 bg-[#1c1c1c] px-4 pt-4">
-        {query.length < 2 ? (
-          <CustomTitleText className="text-gray-400">Search by item name...</CustomTitleText>
-        ) : (
-          <ItemsList items={results}/>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+    <View className="flex-1 bg-[#1c1c1c] px-4 pt-4">
+      {query.length < 2 ? (
+        <CustomTitleText className="text-gray-400">Search by item name...</CustomTitleText>
+      ) : (
+        <ItemsList items={results}/>
+      )}
+    </View>
   );
 }
