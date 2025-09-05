@@ -186,17 +186,15 @@ export default function Index() {
                 )}
               </View>
 
-              {data && data.parts && (
-                <GestureDetector gesture={swipeGesture}>
-                  <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 20 }}>
-                    <CustomTitleText className='text-4xl text-white flex justify-center mb-6 px-4'>
-                      Part {id}
-                    </CustomTitleText>
+              <GestureDetector gesture={swipeGesture}>
+                <View>
+                  <CustomTitleText className='text-4xl text-white flex justify-center mb-6 px-4'>
+                    Part {id}
+                  </CustomTitleText>
 
-                    <WeaponBuild partId={Number(id)} onReady={() => setWeaponBuildReady(true)} />
-                  </ScrollView>
-                </GestureDetector>
-              )}
+                  <WeaponBuild partId={Number(id)} onReady={() => setWeaponBuildReady(true)} />
+                </View>
+              </GestureDetector>
 
             </View>
 
