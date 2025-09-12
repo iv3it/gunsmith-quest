@@ -70,7 +70,7 @@ export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
 
           {/* Active Variant Content */}
           <View className="mt-4 mb-8">
-            <ItemsList items={build.variants[selectedVariant].parts.flatMap((part) => part.items)} />
+            <ItemsList items={build.variants[selectedVariant].parts.map((part) => part.items)} />
           </View>
 
         </View>
