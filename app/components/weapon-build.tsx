@@ -50,7 +50,15 @@ export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
     <View className='my-4'>
       {partData && partData.builds.map((build: Build, partDataIndex: number) =>
         <View key={partDataIndex} className='px-4'>
-          <CustomText className='text-2xl text-white font-medium flex justify-center mb-6'>{build.weapon?.name || 'No name'}</CustomText>
+          <CustomText className='text-2xl text-white font-medium flex justify-center mb-4'>{build.weapon?.name || 'No name'}</CustomText>
+          <CustomText className='text-white text-xl text-center'>
+            {build.weapon.traders.map((item, tradersIndex) => {
+              const { trader, loyalty, isBarter, task } = item;
+              const barterText = isBarter ? 'B' : '';
+              const taskText = task ? ` - ${task}` : '';
+              return `${trader.name} (${loyalty}${barterText}${taskText})`;
+            }).join(', ')}
+          </CustomText>
           <CustomText className={`text-2xl text-darkGreen flex justify-center mb-6 ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
 
           {/* Tabs */}
