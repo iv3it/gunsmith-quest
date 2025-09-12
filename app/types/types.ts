@@ -30,7 +30,7 @@ export type WeaponWithQuestParts = Omit<Weapon, 'traders'> & {
 
 export interface Variant {
   parts: {
-    items: WeaponWithoutTask[];
+    items: WeaponWithoutTask[][];
   }[]
 }
 
