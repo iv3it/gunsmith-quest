@@ -56,7 +56,7 @@ export default function ItemsList({ items }: ItemsListProps) {
             }
 
             {hasQuestParts(item) && item.questParts && item.questParts.length > 0 &&
-              <CustomText className='text-white text-base'>Parts: {item.questParts.join(", ")}</CustomText>
+              <CustomText className='text-white text-base'>Part: {item.questParts.join(", ")}</CustomText>
             }
           </View>
         </View>
