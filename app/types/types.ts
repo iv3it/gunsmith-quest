@@ -15,14 +15,9 @@ export interface Trader {
     name: string;
   };
   loyalty: number;
-  task: string;
+  task?: string;
   isBarter: boolean;
 }
-
-export type TraderWithoutTask = Omit<Trader, 'task'>;
-export type WeaponWithoutTask = Omit<Weapon, 'traders'> & {
-  traders: TraderWithoutTask[];
-};
 
 export type WeaponWithQuestParts = Omit<Weapon, 'traders'> & {
   questParts: number[];
@@ -30,7 +25,7 @@ export type WeaponWithQuestParts = Omit<Weapon, 'traders'> & {
 
 export interface Variant {
   parts: {
-    items: WeaponWithoutTask[][];
+    items: Weapon[][];
   }[]
 }
 

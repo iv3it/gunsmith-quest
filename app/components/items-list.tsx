@@ -5,24 +5,24 @@ import { Shadow } from "react-native-shadow-2";
 import CustomText from "../components/custom-text";
 import CustomTitleText from "../components/custom-title-text";
 import { useCounter } from "../context/counter-context";
-import { TraderWithoutTask, WeaponWithoutTask, WeaponWithQuestParts } from "../types/types";
+import { Weapon, WeaponWithQuestParts } from "../types/types";
 
-function hasQuestParts(item: WeaponWithoutTask | WeaponWithQuestParts): item is WeaponWithQuestParts {
+function hasQuestParts(item: Weapon | WeaponWithQuestParts): item is WeaponWithQuestParts {
   return (item as WeaponWithQuestParts).questParts !== undefined;
 }
 
-function hasTraders(item: WeaponWithoutTask | WeaponWithQuestParts): item is WeaponWithoutTask {
-  return (item as WeaponWithoutTask).traders !== undefined;
+function hasTraders(item: Weapon | WeaponWithQuestParts): item is Weapon {
+  return (item as Weapon).traders !== undefined;
 }
 
 interface ItemsListProps {
-  items: (WeaponWithoutTask[][] | WeaponWithQuestParts)[];
+  items: (Weapon[][] | WeaponWithQuestParts)[];
 }
 
 export default function ItemsList({ items }: ItemsListProps) {
   const { amounts, increase, decrease } = useCounter();
 
-  const renderRow = (item: WeaponWithoutTask | WeaponWithQuestParts) => {
+  const renderRow = (item: Weapon | WeaponWithQuestParts) => {
     const amount = amounts[item.slug] || 0;
 
     return (
@@ -52,7 +52,14 @@ export default function ItemsList({ items }: ItemsListProps) {
             <CustomTitleText className='text-white text-base font-semibold'>{item.name}</CustomTitleText>
 
             {hasTraders(item) && item.traders && item.traders.length > 0 &&
-              <CustomText className='text-white text-base'>{item.traders.map((trader: TraderWithoutTask) => trader.trader.name).join(', ')}</CustomText>
+              <CustomText className='text-white text-base'>
+                {item.traders.map((item, tradersIndex) => {
+                  const { trader, loyalty, isBarter, task } = item;
+                  const barterText = isBarter ? 'B' : '';
+                  const taskText = task ? ` - ${task}` : '';
+                  return `${trader.name} (${loyalty}${barterText}${taskText})`;
+                }).join(', ')}
+              </CustomText>
             }
 
             {hasQuestParts(item) && item.questParts && item.questParts.length > 0 &&
@@ -114,7 +121,7 @@ export default function ItemsList({ items }: ItemsListProps) {
       data={items}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item }) => {
-        // WeaponWithoutTask[][]:
+        // Weapon[][]:
         if (Array.isArray(item)) {
           return (
             <View className="border-b border-[#424242]">
