@@ -1,5 +1,6 @@
 import { SairaExtraCondensed_400Regular } from '@expo-google-fonts/saira-extra-condensed';
 import { Tomorrow_400Regular } from '@expo-google-fonts/tomorrow';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -69,6 +70,18 @@ export default function Index() {
 
     fetchPartsList();
   }, []);
+
+  useEffect(() => {
+    const saveLastOpenedPart = async () => {
+      try {
+        await AsyncStorage.setItem('lastOpenedPartId', id.toString());
+      } catch (error) {
+        console.error("Error saving last part:", error);
+      }
+    };
+
+    saveLastOpenedPart();
+  }, [id]);
 
   if (!data || !data.parts) {
     return null;

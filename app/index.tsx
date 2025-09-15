@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { fetchQuestPartsList } from "./utils/questPartsList";
@@ -8,13 +9,22 @@ export default function Index() {
   useEffect(() => {
     const load = async () => {
       try {
-        const response = await fetchQuestPartsList();
-        const firstPartId = response.parts[0];
-        if (firstPartId) {
+        const lastOpenedPartId = await AsyncStorage.getItem('lastOpenedPartId');      
+        
+        if (lastOpenedPartId) {
           router.replace({
             pathname: "/part/[id]",
-            params: { id: firstPartId },
+            params: { id: lastOpenedPartId },
           });
+        } else {
+          const response = await fetchQuestPartsList();
+          const firstPartId = response.parts[0];
+          if (firstPartId) {
+            router.replace({
+              pathname: "/part/[id]",
+              params: { id: firstPartId },
+            });
+          }
         }
       } catch (error) {
         console.error("Failed to fetch parts:", error);
