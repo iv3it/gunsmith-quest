@@ -72,7 +72,7 @@ export default function HamburgerMenu() {
 
             {/* Footer */}
             <View className="py-5">
-              <CustomText className="text-xs text-[#aaa]">© 2025</CustomText>
+              <CustomText className="text-[#aaa]">© 2025</CustomText>
             </View>
           </View>
         </View>
