@@ -1,11 +1,33 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Link } from "expo-router";
+import { useEffect, useState } from "react";
+import { FlatList, Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import { QuestParts } from "../types/types";
+import { fetchQuestPartsList } from "../utils/questPartsList";
 import CustomText from "./custom-text";
 import CustomTitleText from "./custom-title-text";
 
 export default function HamburgerMenu() {
   const [menuVisible, setMenuVisible] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [questParts, setQuestParts] = useState<QuestParts | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchPartsList = async () => {
+      try {
+        const response = await fetchQuestPartsList();
+
+        setQuestParts(response);
+      } catch (error) {
+        console.error('Axios error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPartsList();
+  }, []);
 
   return (
     <>
@@ -14,7 +36,7 @@ export default function HamburgerMenu() {
       </TouchableOpacity>
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={menuVisible}
         onRequestClose={() => setMenuVisible(false)}
@@ -30,14 +52,27 @@ export default function HamburgerMenu() {
             </TouchableOpacity>
 
             {/* Menu */}
-            <CustomTitleText style={styles.menuTitle}>Menu</CustomTitleText>
-            <CustomTitleText style={styles.menuItem}>Item 1</CustomTitleText>
 
-            <View style={{ flex: 1 }} />
+            <CustomTitleText className="text-xl text-white mb-4">Parts:</CustomTitleText>
+            <FlatList
+              data={questParts?.parts}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => 
+                <View className="border-b border-[#424242] max-h-24">
+                  <Link href={`/part/${item}`} className="text-white py-3">
+                    <CustomTitleText className="text-white mb-4">Part {item}</CustomTitleText>
+                  </Link>
+                </View>
+              }
+            />
+
+            <Link href="/credits" className="py-5 border-y border-[#aaa]">
+              <CustomTitleText className="text-xl text-white mb-4">Credits</CustomTitleText>
+            </Link>
 
             {/* Footer */}
-            <View style={styles.footer}>
-              <CustomText style={styles.footerText}>© 2025</CustomText>
+            <View className="py-5">
+              <CustomText className="text-xs text-[#aaa]">© 2025</CustomText>
             </View>
           </View>
         </View>
@@ -61,25 +96,5 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     alignSelf: "flex-end",
-  },
-  menuTitle: {
-    fontSize: 20,
-    color: "white",
-    marginBottom: 16,
-  },
-  menuItem: {
-    fontSize: 16,
-    color: "white",
-    paddingVertical: 10,
-  },
-  footer: {
-    borderTopWidth: 1,
-    borderTopColor: "#444",
-    paddingTop: 10,
-  },
-  footerText: {
-    fontSize: 12,
-    color: "#aaa",
-    marginTop: 4,
   },
 });
