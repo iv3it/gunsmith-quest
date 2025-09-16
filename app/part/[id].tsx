@@ -204,7 +204,7 @@ export default function Index() {
 
               <GestureDetector gesture={swipeGesture}>
                 <View>
-                  <CustomTitleText className='text-4xl text-white flex justify-center mb-6 px-4'>
+                  <CustomTitleText className='text-4xl text-white md:text-center mb-6 px-4'>
                     Part {id}
                   </CustomTitleText>
 
