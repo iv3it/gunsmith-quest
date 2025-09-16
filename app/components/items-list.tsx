@@ -26,7 +26,7 @@ export default function ItemsList({ items }: ItemsListProps) {
     const amount = amounts[item.slug] || 0;
 
     return (
-      <View className='flex-row items-stretch'>
+      <View className='flex-row items-stretch' key={item.slug}>
 
         {/* Name Cell */}
         <View className='flex-1 flex-row items-center p-4 pl-0'>
