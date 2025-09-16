@@ -59,14 +59,14 @@ export default function HamburgerMenu() {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => 
                 <View className="border-b border-[#424242] max-h-24">
-                  <Link href={`/part/${item}`} className="text-white py-3">
+                  <Link href={`/part/${item}`} onPress={() => setMenuVisible(false)} className="text-white py-3">
                     <CustomTitleText className="text-white mb-4">Part {item}</CustomTitleText>
                   </Link>
                 </View>
               }
             />
 
-            <Link href="/credits" className="py-5 border-y border-[#aaa]">
+            <Link href="/credits" onPress={() => setMenuVisible(false)} className="py-5 border-y border-[#aaa]">
               <CustomTitleText className="text-xl text-white mb-4">Credits</CustomTitleText>
             </Link>
 
