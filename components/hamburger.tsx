@@ -1,9 +1,9 @@
+import { QuestParts } from "@/types/types";
+import { fetchQuestPartsList } from "@/utils/questPartsList";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, Modal, StyleSheet, TouchableOpacity, View } from "react-native";
-import { QuestParts } from "../types/types";
-import { fetchQuestPartsList } from "../utils/questPartsList";
 import CustomText from "./custom-text";
 import CustomTitleText from "./custom-title-text";
 

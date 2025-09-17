@@ -1,7 +1,7 @@
+import CustomText from "@/components/custom-text";
+import CustomTitleText from "@/components/custom-title-text";
 import * as Linking from 'expo-linking';
 import { View } from "react-native";
-import CustomText from "./components/custom-text";
-import CustomTitleText from "./components/custom-title-text";
 
 export default function CreditsPage() {
   return (

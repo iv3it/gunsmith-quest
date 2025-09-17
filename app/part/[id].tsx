@@ -1,3 +1,12 @@
+import CustomButton from '@/components/custom-button';
+import CustomText from '@/components/custom-text';
+import CustomTitleText from '@/components/custom-title-text';
+import LoadingDots from '@/components/loading-dots';
+import WeaponBuild from '@/components/weapon-build';
+import { useCounter } from '@/context/counter-context';
+import "@/global.css";
+import { QuestParts } from '@/types/types';
+import { fetchQuestPartsList } from '@/utils/questPartsList';
 import { SairaExtraCondensed_400Regular } from '@expo-google-fonts/saira-extra-condensed';
 import { Tomorrow_400Regular } from '@expo-google-fonts/tomorrow';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,15 +17,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, FlatList, Platform, Pressable, StyleSheet, Switch, View } from "react-native";
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Svg, { Defs, Path, Pattern, Rect } from 'react-native-svg';
-import "../../global.css";
-import CustomButton from '../components/custom-button';
-import CustomText from '../components/custom-text';
-import CustomTitleText from '../components/custom-title-text';
-import LoadingDots from '../components/loading-dots';
-import WeaponBuild from '../components/weapon-build';
-import { useCounter } from '../context/counter-context';
-import { QuestParts } from '../types/types';
-import { fetchQuestPartsList } from '../utils/questPartsList';
 
 const { width, height } = Dimensions.get('window');
 

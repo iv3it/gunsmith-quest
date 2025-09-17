@@ -1,10 +1,10 @@
+import CustomTitleText from "@/components/custom-title-text";
+import ItemsList from "@/components/items-list";
+import { useSearch } from "@/context/search-context";
+import { WeaponWithQuestParts } from "@/types/types";
+import { fetchAllItemsList } from "@/utils/allItemsList";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import CustomTitleText from "./components/custom-title-text";
-import ItemsList from "./components/items-list";
-import { useSearch } from "./context/search-context";
-import { WeaponWithQuestParts } from "./types/types";
-import { fetchAllItemsList } from "./utils/allItemsList";
 
 export default function SearchPage() {
   const { query } = useSearch();

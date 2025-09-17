@@ -1,8 +1,8 @@
+import { useCounter } from '@/context/counter-context';
+import { Build, QuestData, Variant } from '@/types/types';
+import { fetchQuestPart } from '@/utils/questPart';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
-import { useCounter } from '../context/counter-context';
-import { Build, QuestData, Variant } from '../types/types';
-import { fetchQuestPart } from '../utils/questPart';
 import CustomText from './custom-text';
 import ItemsList from './items-list';
 

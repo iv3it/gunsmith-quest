@@ -1,10 +1,10 @@
+import Header from "@/components/header";
+import { CounterProvider } from "@/context/counter-context";
+import { SearchProvider } from "@/context/search-context";
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "./components/header";
-import { CounterProvider } from "./context/counter-context";
-import { SearchProvider } from "./context/search-context";
 
 export default function RootLayout() {
   return ( 

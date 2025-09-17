@@ -1,11 +1,11 @@
+import { useCounter } from "@/context/counter-context";
+import { Weapon, WeaponWithQuestParts } from "@/types/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from 'expo-image';
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { Shadow } from "react-native-shadow-2";
-import CustomText from "../components/custom-text";
-import CustomTitleText from "../components/custom-title-text";
-import { useCounter } from "../context/counter-context";
-import { Weapon, WeaponWithQuestParts } from "../types/types";
+import CustomText from "./custom-text";
+import CustomTitleText from "./custom-title-text";
 
 function hasQuestParts(item: Weapon | WeaponWithQuestParts): item is WeaponWithQuestParts {
   return (item as WeaponWithQuestParts).questParts !== undefined;

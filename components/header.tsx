@@ -1,9 +1,9 @@
+import { useSearch } from "@/context/search-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from 'expo-image';
 import { Link, usePathname, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import { useSearch } from "../context/search-context";
 import HamburgerMenu from "./hamburger";
 
 export default function Header ({}) {

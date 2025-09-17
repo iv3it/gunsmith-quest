@@ -1,7 +1,7 @@
+import { fetchQuestPartsList } from "@/utils/questPartsList";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
-import { fetchQuestPartsList } from "./utils/questPartsList";
 
 export default function Index() {
   const router = useRouter();
