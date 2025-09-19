@@ -19,6 +19,8 @@ export default function CreditsPage() {
 
       <CustomText className="text-white text-2xl mb-4">Sources:</CustomText>
       <CustomText className="text-white underline underline-offset-4 text-xl mb-2" onPress={() => Linking.openURL('https://www.flaticon.com/free-icon/rifle_4810861')}>Rifle icon created by Triangle Squad - Flaticon</CustomText>
+
+      <CustomText className="text-white text-xl mb-2">Game content and materials are trademarks and copyrights of Battlestate Games and its licensors. All rights reserved.</CustomText>
     </View>
   );
 }
