@@ -1,5 +1,5 @@
 import { useCounter } from '@/context/counter-context';
-import { Build, QuestData, Variant } from '@/types/types';
+import { Build, QuestData, Task, Variant } from '@/types/types';
 import { fetchQuestPart } from '@/utils/questPart';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
@@ -53,9 +53,10 @@ export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
           <CustomText className='text-2xl text-white font-medium md:text-center mb-4'>{build.weapon?.name || 'No name'}</CustomText>
           <CustomText className='text-white text-xl md:text-center'>
             {build.weapon.traders.map((item, tradersIndex) => {
-              const { trader, loyalty, isBarter, task } = item;
+              const { trader, loyalty, isBarter } = item;
+              const task : Task | undefined = item.task;
               const barterText = isBarter ? 'B' : '';
-              const taskText = task ? ` - ${task}` : '';
+              const taskText = task ? ` - ${task.name}` : '';
               return `${trader.name} (${loyalty}${barterText}${taskText})`;
             }).join(', ')}
           </CustomText>

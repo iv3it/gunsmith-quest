@@ -15,7 +15,7 @@ export interface Trader {
     name: string;
   };
   loyalty: number;
-  task?: string;
+  task?: Task;
   isBarter: boolean;
 }
 
@@ -30,7 +30,7 @@ export interface Variant {
 }
 
 export interface Build {
-	weapon: Weapon;
+  weapon: Weapon;
   variants: Variant[];
 }
 
@@ -38,4 +38,10 @@ export interface QuestData {
   version: number;
   id: number;
   builds: Build[];
+}
+
+export interface Task {
+  slug: string;
+  name: string;
+  link: string;
 }
