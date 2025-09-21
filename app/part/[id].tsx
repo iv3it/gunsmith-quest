@@ -15,7 +15,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, FlatList, Platform, Pressable, StyleSheet, Switch, View } from "react-native";
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Svg, { Defs, Path, Pattern, Rect } from 'react-native-svg';
 
 const { width, height } = Dimensions.get('window');
@@ -111,19 +110,6 @@ export default function Index() {
     }
   };
 
-  const swipeGesture = Gesture.Pan()
-  .activeOffsetX([-50, 50]) // only react if horizontal movement > 50px
-  .failOffsetY([-50, 50])   // fail gesture if vertical movement > 50px
-  .onEnd((event) => {
-    if (!data.parts) return;
-
-    if (event.translationX < 0) {
-      handleNext()
-    } else if (event.translationX > 0) {
-      handlePrev()
-    }
-  }).runOnJS(true);
-
   return (
     <View style={{ flex: 1 }} className='bg-[#1c1c1c]'>
       {showOverlay && (
@@ -202,15 +188,13 @@ export default function Index() {
                 )}
               </View>
 
-              <GestureDetector gesture={swipeGesture}>
-                <View>
-                  <CustomTitleText className='text-4xl text-white md:text-center mb-6 px-4'>
-                    Part {id}
-                  </CustomTitleText>
+              <View>
+                <CustomTitleText className='text-4xl text-white md:text-center mb-6 px-4'>
+                  Part {id}
+                </CustomTitleText>
 
-                  <WeaponBuild partId={Number(id)} onReady={() => setWeaponBuildReady(true)} />
-                </View>
-              </GestureDetector>
+                <WeaponBuild partId={Number(id)} onReady={() => setWeaponBuildReady(true)} />
+              </View>
 
             </View>
           }
