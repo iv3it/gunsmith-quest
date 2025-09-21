@@ -1,5 +1,5 @@
 import { useCounter } from "@/context/counter-context";
-import { Weapon, WeaponWithQuestParts } from "@/types/types";
+import { Task, Weapon, WeaponWithQuestParts } from "@/types/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from 'expo-image';
 import { FlatList, TouchableOpacity, View } from "react-native";
@@ -54,9 +54,10 @@ export default function ItemsList({ items }: ItemsListProps) {
             {hasTraders(item) && item.traders && item.traders.length > 0 &&
               <CustomText className='text-white text-base'>
                 {item.traders.map((item, tradersIndex) => {
-                  const { trader, loyalty, isBarter, task } = item;
+                  const { trader, loyalty, isBarter } = item;
+                  const task: Task | undefined = item.task;
                   const barterText = isBarter ? 'B' : '';
-                  const taskText = task ? ` - ${task}` : '';
+                  const taskText = task ? ` - ${task.name}` : '';
                   return `${trader.name} (${loyalty}${barterText}${taskText})`;
                 }).join(', ')}
               </CustomText>
