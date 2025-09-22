@@ -188,10 +188,11 @@ export default function Index() {
                 )}
               </View>
 
-              <View>
-                <CustomTitleText className='text-4xl text-white md:text-center mb-6 px-4'>
+              <View className='px-4'>
+                <CustomTitleText className='text-4xl text-white md:text-center mb-4'>
                   Part {id}
                 </CustomTitleText>
+                <CustomText className={`text-2xl text-darkGreen md:text-center my-2 ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
 
                 <WeaponBuild partId={Number(id)} onReady={() => setWeaponBuildReady(true)} />
               </View>

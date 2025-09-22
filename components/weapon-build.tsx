@@ -1,4 +1,3 @@
-import { useCounter } from '@/context/counter-context';
 import { Build, QuestData, Task, Variant } from '@/types/types';
 import { fetchQuestPart } from '@/utils/questPart';
 import { useEffect, useState } from 'react';
@@ -14,8 +13,6 @@ interface WeaponBuildProps {
 export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
   const [loading, setLoading] = useState(true);
   
-  const { completed } = useCounter();
-
   const [partData, setPartData] = useState<QuestData | undefined>(undefined);
 
   const [selectedVariant, setSelectedVariant] = useState(0);
@@ -44,12 +41,10 @@ export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
     }
   }, [loading, partData]);
 
-  const isCompleted = !!completed?.[partId];
-
   return (
     <View className='my-4'>
       {partData && partData.builds.map((build: Build, partDataIndex: number) =>
-        <View key={partDataIndex} className='px-4'>
+        <View key={partDataIndex} className='mb-24'>
           <CustomText className='text-2xl text-white font-medium md:text-center mb-4'>{build.weapon?.name || 'No name'}</CustomText>
           <CustomText className='text-white text-xl md:text-center'>
             {build.weapon.traders.map((item, tradersIndex) => {
@@ -60,10 +55,9 @@ export default function WeaponBuild ({ partId, onReady } : WeaponBuildProps) {
               return `${trader.name} (${loyalty}${barterText}${taskText})`;
             }).join(', ')}
           </CustomText>
-          <CustomText className={`text-2xl text-darkGreen md:text-center my-6 ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>Completed</CustomText>
 
           {/* Tabs */}
-          <View className="flex-row mb-6">
+          <View className="flex-row my-6">
             {build.variants.map((variant: Variant, variantIndex: number) => (
               <Pressable
                 key={variantIndex}
